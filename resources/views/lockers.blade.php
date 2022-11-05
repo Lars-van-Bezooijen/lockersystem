@@ -11,9 +11,14 @@
 <body>
     <div class="container">
         <h1>Locker summary</h1>
+
         @if (session('message'))
             {{ session('message') }}
         @endif
+        @if (session('edit'))
+            {{ session('edit') }}
+        @endif
+
         <table class="table">
             <thead>
                 <tr>
@@ -44,23 +49,26 @@
                         @isset($locker->last_hired)
                             <td>{{ $locker->last_hired }}</td>
                         @else
-                            <td>Never</td>
+                            <td>Not available</td>
                         @endisset
 
                         @isset($locker->last_freed)
                             <td>{{ $locker->last_freed }}</td>
                         @else
-                            <td>Never</td>
+                            <td>Not available</td>
                         @endisset
 
                         <td>
-                            @isset($locker->student->id)
+                            {{-- @isset($locker->student->id)
                                 <form action="{{ route('lockers.editStudent', $locker->student->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit" class="btn btn-danger">Remove Student</button>
                                 </form>
-                            @endisset
+                            @endisset --}}
+
+                            <a class="btn btn-primary" href="{{ route('lockers.edit', $locker->id) }}">Edit</a>
+
                         </td>
                     </tr>
                 @endforeach

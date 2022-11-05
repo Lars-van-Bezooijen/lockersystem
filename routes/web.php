@@ -19,7 +19,8 @@ Route::get('/', function () {
 });
 
 Route::get('/lockers', [LockerController::class, 'show'])->name('lockers.show');
-Route::put('/lockers/edit/{id}', [LockerController::class, 'edit'])->name('lockers.editStudent');
+Route::get('/lockers/edit/{id}', [LockerController::class, 'edit'])->name('lockers.edit');
+Route::post('/lockers/edit/{id}', [LockerController::class, 'update'])->name('lockers.update');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
