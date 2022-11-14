@@ -12,6 +12,10 @@
     <div class="container">
         <h1>Edit locker #{{ $locker->locker_number }}</h1>
 
+        @if (session('error'))
+            {{ session('error') }}
+        @endif
+
         <form action="{{ route('lockers.update', $locker->id) }}" method="POST">
             @csrf
             @method('POST')

@@ -18,10 +18,6 @@ class LockerController extends Controller
 
     public function edit($id)
     {
-        // $locker = Locker::find($id);
-        // $locker->student_id = null;
-        // $locker->save();
-        // return redirect()->route('lockers.show')->with('message', 'Student has been removed from locker');
         $locker = Locker::find($id);
         $students = Student::all();
         return view('edit', [
@@ -30,7 +26,7 @@ class LockerController extends Controller
         ]);
     }
 
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $locker = Locker::find($id);
         if(request('student_id') == 'null') 
@@ -41,6 +37,13 @@ class LockerController extends Controller
         }
         else 
         {
+            // if student has a locker, dont assign locker
+            $locker_user = Locker::where('student_id', request('student_id'))->first();
+            if(isset($locker_user)) 
+            {
+                return redirect()->back()->with('error', 'Student already has a locker');
+            }
+
             $locker->student_id = request('student_id');
             $locker->last_hired = now();
             $locker->last_freed = null;
